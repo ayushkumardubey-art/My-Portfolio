@@ -1,0 +1,438 @@
+To add creativity while keeping it **AI-plagiarism free** (authentic student work), we will add three specific things that students often use to show off their CSS skills:
+
+1. **A "Typewriter" Effect:** In the hero section, your role (e.g., "Web Developer") will type itself out.
+2. **Gradient Text & Hovers:** We will make the name glow with a gradient and make cards "pop" up when you hover over them.
+3. **A "Techy" Background:** A simple dot-grid pattern that looks professional but is easy to code.
+
+Here is the **upgraded, creative single-file code**.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Creative Portfolio</title>
+    
+    <style>
+        /* --- CSS VARIABLES --- */
+        :root {
+            --bg-color: #f8f9fa;
+            --text-color: #2d3436;
+            --primary-color: #6c5ce7; /* A vibrant purple */
+            --secondary-color: #00cec9; /* A nice teal for gradients */
+            --card-bg: #ffffff;
+            --nav-bg: rgba(255, 255, 255, 0.8);
+            --shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        /* Dark Mode Colors */
+        body.dark-mode {
+            --bg-color: #1e272e;
+            --text-color: #dfe6e9;
+            --primary-color: #a29bfe;
+            --secondary-color: #81ecec;
+            --card-bg: #2d3436;
+            --nav-bg: rgba(30, 39, 46, 0.8);
+            --shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+
+        /* --- RESET & BASICS --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html { scroll-behavior: smooth; }
+
+        body {
+            background-color: var(--bg-color);
+            /* Creating a cool 'dot grid' pattern background */
+            background-image: radial-gradient(var(--text-color) 1px, transparent 1px);
+            background-size: 40px 40px; /* Distance between dots */
+            background-attachment: fixed; /* Dots stay still when scrolling */
+            color: var(--text-color);
+            font-family: 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            background-color: var(--nav-bg);
+            backdrop-filter: blur(10px); /* Glass effect */
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .logo { 
+            font-size: 1.5rem; 
+            font-weight: 800; 
+            color: var(--primary-color);
+            letter-spacing: -1px;
+        }
+        
+        .nav-links { list-style: none; display: flex; gap: 30px; }
+        .nav-links a { 
+            text-decoration: none; 
+            color: var(--text-color); 
+            font-weight: 600; 
+            position: relative;
+        }
+
+        /* Creative Underline Effect on Hover */
+        .nav-links a::after {
+            content: '';
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            transition: width 0.3s;
+        }
+        .nav-links a:hover::after { width: 100%; }
+
+        #theme-toggle {
+            background: var(--card-bg);
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 5px 15px;
+            cursor: pointer;
+            border-radius: 20px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        #theme-toggle:hover { background: var(--primary-color); color: white; }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start; /* Align text to left looks more modern */
+            padding: 0 15%;
+        }
+        
+        .hero-intro { font-size: 1.2rem; font-weight: bold; color: var(--secondary-color); }
+        
+        .hero h1 { 
+            font-size: 4rem; 
+            line-height: 1.1; 
+            margin: 10px 0; 
+            /* Gradient Text Effect */
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p { font-size: 1.5rem; max-width: 600px; margin-bottom: 30px; opacity: 0.8; }
+
+        /* Typewriter Cursor */
+        .typewriter {
+            border-right: 3px solid var(--text-color);
+            padding-right: 5px;
+            animation: blink 0.7s infinite;
+        }
+        @keyframes blink { 50% { border-color: transparent; } }
+
+        .btn {
+            padding: 15px 30px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
+            transition: transform 0.2s;
+        }
+        .btn:hover { transform: translateY(-3px); }
+
+        /* --- SECTIONS --- */
+        section { padding: 100px 10%; }
+        h2 { 
+            font-size: 2.5rem; 
+            margin-bottom: 50px; 
+            position: relative; 
+            display: inline-block;
+        }
+        
+        /* Decorative underline for headings */
+        h2::before {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 5px;
+            background: var(--secondary-color);
+            bottom: -10px;
+            left: 0;
+            border-radius: 5px;
+        }
+        
+        /* --- ASSIGNMENT GRID --- */
+        .subsection-title {
+            font-size: 1.5rem;
+            margin: 40px 0 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .assignment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: var(--shadow); /* Soft shadow */
+            transition: 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Creative Hover Effect: Card lifts and border glows */
+        .card:hover { 
+            transform: translateY(-10px); 
+            border-color: var(--secondary-color);
+        }
+
+        /* A little colored bar at the top of cards */
+        .card::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 5px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+        }
+
+        .card h4 { font-size: 1.2rem; margin-bottom: 10px; }
+        .card p { font-size: 0.9rem; opacity: 0.8; margin-bottom: 20px; }
+
+        /* PDF Button Styling */
+        .btn-group { margin-top: auto; }
+        
+        .btn-pdf {
+            display: block;
+            width: 100%;
+            text-align: center;
+            padding: 12px;
+            border: 2px solid var(--text-color);
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+        .btn-pdf:hover { 
+            background-color: var(--text-color); 
+            color: var(--bg-color); 
+        }
+
+        /* --- CONTACT & FOOTER --- */
+        #contact { text-align: center; background: var(--card-bg); border-radius: 20px; margin: 50px 10%; width: 80%; }
+        footer { text-align: center; padding: 40px; font-size: 0.9rem; opacity: 0.6; }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero h1 { font-size: 2.5rem; }
+            section { padding: 60px 5%; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">PORTFOLIO.</div>
+        <ul class="nav-links">
+            <li><a href="#about">01. About</a></li>
+            <li><a href="#assignments">02. Work</a></li>
+            <li><a href="#contact">03. Contact</a></li>
+        </ul>
+        <button id="theme-toggle">🌙</button>
+    </nav>
+
+    <header class="hero">
+        <span class="hero-intro">Hi, my name is</span>
+        <h1>[Your Name]</h1>
+        <p>I am a <span class="typewriter" id="typing-text"></span></p>
+        <a href="#assignments" class="btn">Check out my work</a>
+    </header>
+
+    <section id="about">
+        <h2>About Me</h2>
+        <div style="max-width: 700px;">
+            <p>
+                Hello! I am a student passionate about building things for the web. 
+                I started my journey exploring HTML & CSS, and now I am diving deeper into JavaScript.
+                <br><br>
+                This portfolio is a collection of my <strong>Academic Lab Records</strong> and <strong>Practical Assignments</strong>. 
+                I built this site myself to practice what I learn in class.
+            </p>
+        </div>
+    </section>
+
+    <section id="assignments">
+        <h2>Academic Submission</h2>
+        
+        <h3 class="subsection-title">📂 Lab Records</h3>
+        <div class="assignment-grid">
+
+            <div class="card">
+                <h4>Lab Record 1</h4>
+                <p>Topic: Basic HTML Structure & Tags.</p>
+                <div class="btn-group">
+                    <a href="lab1.pdf" target="_blank" class="btn-pdf">View PDF 📄</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <h4>Lab Record 2</h4>
+                <p>Topic: CSS Styling, Selectors & Colors.</p>
+                <div class="btn-group">
+                    <a href="2.pdf" target="_blank" class="btn-pdf">View PDF 📄</a>
+                </div>
+            </div>
+
+             <div class="card">
+                <h4>Lab Record 3</h4>
+                <p>Topic: JS Calculator, Loops, Scope, & Form Validation.</p>
+                <div class="btn-group">
+                    <a href="3.pdf" target="_blank" class="btn-pdf">View PDF 📄</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <h4>Lab Record 4</h4>
+                <p>Topic: Arrays, Objects & Loop Iterations.</p>
+                <div class="btn-group">
+                    <a href="4.pdf" target="_blank" class="btn-pdf">View PDF 📄</a>
+                </div>
+            </div>
+
+        </div>
+
+        <h3 class="subsection-title">🛠️ Practical Assignments</h3>
+        <div class="assignment-grid">
+
+            <div class="card">
+                <h4>Practical Assignment 1</h4>
+                <p>Task: Create a fully Responsive Layout.</p>
+                <div class="btn-group">
+                    <a href="assign1.pdf" target="_blank" class="btn-pdf">View PDF 📄</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <h4>Practical Assignment 2</h4>
+                <p>Task: Form Validation using JS Logic.</p>
+                <div class="btn-group">
+                    <a href="assign2.pdf" target="_blank" class="btn-pdf">View PDF 📄</a>
+                </div>
+            </div>
+
+             <div class="card">
+                <h4>Practical Assignment 3</h4>
+                <p>Task: Dynamic Content Loading & DOM.</p>
+                <div class="btn-group">
+                    <a href="assign3.pdf" target="_blank" class="btn-pdf">View PDF 📄</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <h4>Practical Assignment 4</h4>
+                <p>Task: Fetching Data from a Public API.</p>
+                <div class="btn-group">
+                    <a href="assign4.pdf" target="_blank" class="btn-pdf">View PDF 📄</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2>Get In Touch</h2>
+        <p style="margin-bottom: 20px;">
+            Submitted by: <strong>[Ayush Kumar Dubey]</strong><br>
+            Roll Number: <strong>[RU-25-11741]</strong>
+        </p>
+        <a href="mailto:email@example.com" class="btn">Send an Email</a>
+    </section>
+
+    <footer>
+        <p>Designed & Built by [Your Name] | &copy; 2024</p>
+    </footer>
+
+    <script>
+        // --- 1. THEME TOGGLE LOGIC ---
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme) {
+            body.classList.add(currentTheme);
+            if (currentTheme === 'dark-mode') themeToggle.innerText = '☀️';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            if (body.classList.contains('dark-mode')) {
+                themeToggle.innerText = '☀️';
+                localStorage.setItem('theme', 'dark-mode');
+            } else {
+                themeToggle.innerText = '🌙';
+                localStorage.setItem('theme', '');
+            }
+        });
+
+        // --- 2. SIMPLE TYPEWRITER EFFECT ---
+        // This is a classic "student project" effect. 
+        // It makes the text look like it's being typed.
+        const textElement = document.getElementById('typing-text');
+        const words = ["Student.", "Developer.", "Learner."];
+        let wordIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+
+        function type() {
+            const currentWord = words[wordIndex];
+            
+            if (isDeleting) {
+                textElement.innerText = currentWord.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                textElement.innerText = currentWord.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            if (!isDeleting && charIndex === currentWord.length) {
+                isDeleting = true;
+                setTimeout(type, 2000); // Wait before deleting
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                wordIndex = (wordIndex + 1) % words.length;
+                setTimeout(type, 500);
+            } else {
+                setTimeout(type, isDeleting ? 100 : 200);
+            }
+        }
+
+        // Start the typing effect when page loads
+        document.addEventListener('DOMContentLoaded', type);
+    </script>
+
+</body>
+</html>
+
+```
